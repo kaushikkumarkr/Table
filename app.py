@@ -2,6 +2,8 @@
 import streamlit as st
 from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer, pipeline
 import pandas as pd
+import torch
+import torch_scatter
 
 
 # Load model & tokenizer
