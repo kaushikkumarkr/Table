@@ -1,26 +1,20 @@
 # Import necessary libraries
 import streamlit as st
-from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer, pipeline
 import pandas as pd
-
-# Load model & tokenizer
-model_name = 'google/tapas-large-finetuned-wtq'
-tapas_model = AutoModelForTableQuestionAnswering.from_pretrained(model_name)
-tapas_tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-# Initializing pipeline
-nlp = pipeline('table-question-answering', model=tapas_model, tokenizer=tapas_tokenizer)
-
-# Define function for question answering
-def qa(query, data):
-    result = nlp({'table': data, 'query': query})
-    answer = result['cells']
-    return answer
 
 # Main function for Streamlit app
 def main():
     st.title("Table Question Answering Chatbot")
     
+    # Lazy loading of Tapas model & tokenizer
+    @st.cache(allow_output_mutation=True)
+    def load_tapas_model():
+        from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer
+        model_name = 'google/tapas-large-finetuned-wtq'
+        tapas_model = AutoModelForTableQuestionAnswering.from_pretrained(model_name)
+        tapas_tokenizer = AutoTokenizer.from_pretrained(model_name)
+        return tapas_model, tapas_tokenizer
+
     # File upload
     st.write("Please upload your CSV file:")
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
@@ -39,7 +33,11 @@ def main():
         
         if st.button("Get Answer"):
             if question:
-                answer = qa(question, data)
+                tapas_model, tapas_tokenizer = load_tapas_model()
+                from transformers import pipeline
+                nlp = pipeline('table-question-answering', model=tapas_model, tokenizer=tapas_tokenizer)
+                result = nlp({'table': data, 'query': question})
+                answer = result['cells']
                 st.write("Answer:", answer)
             else:
                 st.warning("Please enter a question.")
