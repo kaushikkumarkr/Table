@@ -7,4 +7,4 @@ numpy==1.25.2
 pandas_datareader
 pytz
 altair==5.0.1
-force_download=True
+click<8.0,>=7.0
