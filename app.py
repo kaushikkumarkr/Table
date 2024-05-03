@@ -1,10 +1,9 @@
-# Import necessary libraries
+# Add this line to ensure compatibility with Streamlit Sharing
 import streamlit as st
-from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer, pipeline
-import pandas as pd
-import torch
-import torch_scatter
 
+# Import necessary libraries
+import pandas as pd
+from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer, pipeline
 
 # Load model & tokenizer
 model_name = 'google/tapas-large-finetuned-wtq'
