@@ -1,6 +1,6 @@
 streamlit
 transformers
-torch-scatter
+torch-scatter==2.1.2
 torch
 pandas
 torchvision 
