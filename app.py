@@ -2,6 +2,7 @@
 import streamlit as st
 from transformers import AutoModelForTableQuestionAnswering, AutoTokenizer, pipeline
 import pandas as pd
+import torch
 
 # Load model & tokenizer
 model_name = 'google/tapas-large-finetuned-wtq'
