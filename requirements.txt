@@ -1,0 +1,5 @@
+streamlit
+transformers
+torch-scatter
+pandas
+langchain
