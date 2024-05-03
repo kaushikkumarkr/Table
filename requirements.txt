@@ -1,4 +1,9 @@
-streamlit
+streamlit==0.89.0
 transformers
 pandas
 torch
+click==7.1.2
+numpy==1.25.2
+pandas_datareader
+pytz
+altair==5.0.1
